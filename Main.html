@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Goods</title>
+    <link rel="stylesheet" href="Styles.css">
+    <script>
+        function getDayInfo (str) {
+            let datearr=str.split('.');
+            let year=parseInt(datearr[2]), month=parseInt(datearr[1])-1, day=parseInt(datearr[0]);
+
+            let currentDate = new Date(year, month, day);
+            let startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            let days = Math.floor((currentDate - startDate) /
+                (24 * 60 * 60 * 1000));
+
+
+            let result = '';
+
+            switch(currentDate.getDay()) {
+                case 0: result += "Воскресенье, "; break;
+                case 1: result += "Понедельник, "; break;
+                case 2: result += "Вторник, "; break;
+                case 3: result += "Среда, "; break;
+                case 4: result += "Четверг, "; break;
+                case 5: result += "Пятница, "; break;
+                case 6: result += "Суббота, "; break;
+            }
+
+            let weekNumber = Math.floor(days / 7);
+            result += (weekNumber + 1) + " неделя ";
+
+            switch(currentDate.getMonth()) {
+                case 0: result += "января "; break;
+                case 1: result += "февраля "; break;
+                case 2: result += "марта "; break;
+                case 3: result += "апреля "; break;
+                case 4: result += "мая "; break;
+                case 5: result += "июня "; break;
+                case 6: result += "июля "; break;
+                case 7: result += "августа "; break;
+                case 8: result += "сентября "; break;
+                case 9: result += "октября "; break;
+                case 10: result += "ноября "; break;
+                case 11: result += "декабря "; break;
+            }
+
+            result += currentDate.getFullYear() + " года";
+
+            return result;
+        }
+
+        window.addEventListener('scroll', function () {
+            document.getElementById('btn-up').style.display='block';
+
+            if(window.scrollX === 0 && window.scrollY === 0)
+                document.getElementById('btn-up').style.display='none';
+        });
+
+        function tonight () {
+            document.getElementById('day').style.display='block';
+            document.getElementById('night').style.display='none';
+
+            document.getElementById('btn-up-day').style.display='none';
+            document.getElementById('btn-up-night').style.display='block';
+
+            document.getElementById('body').style.background='rgb(30, 30, 30)';
+            document.getElementById('body').style.color='rgb(220, 220, 220)';
+
+            document.getElementsByClassName('menu')[0].style.background='rgb(80, 80, 80)';
+
+            let cards = document.getElementsByClassName('card');
+            let n = cards.length;
+
+            for (i = 0; i < n; i++)
+                cards[i].style.background='rgb(80, 80, 80)';
+        }
+
+        function today () {
+            document.getElementById('day').style.display='none';
+            document.getElementById('night').style.display='block';
+
+            document.getElementById('btn-up-day').style.display='block';
+            document.getElementById('btn-up-night').style.display='none';
+
+            document.getElementById('body').style.background='rgb(220, 220, 220)';
+            document.getElementById('body').style.color='rgb(30, 30, 30)';
+
+            document.getElementsByClassName('menu')[0].style.background='rgb(180, 180, 180)';
+
+            let cards = document.getElementsByClassName('card');
+            let n = cards.length;
+
+            for (i = 0; i < n; i++)
+                cards[i].style.background='rgb(180, 180, 180)';
+        }
+    </script>
+</head>
+<body id="body">
+<header>
+    <div class="menu">
+        <a href="#cat1"><p>Альбомы BTS</p></a>
+        <a href="#cat2"><p>Товары для сада</p></a>
+        <a href="#cat3"><p>Категория 3</p></a>
+        <button id="night" onclick="tonight();"><img src="Pics/ночь.png" alt="иконка ночи"></button>
+        <button id="day" onclick="today();"><img src="Pics/солнце.png" alt="иконка дня"></button>
+    </div>
+</header>
+
+<dialog id="buy">
+    <form class="dialog">
+        <h2>Введите количество</h2>
+        <input class="rect" type="number" min="0" value="0">
+        <h2>Выберите цвет</h2>
+        <p><input type="radio" name="color" value="pink">Розовый<br>
+            <input type="radio" name="color" value="green">Зеленый<br>
+            <input type="radio" name="color" value="black">Черный</p>
+        <h2>Ваш комментарий</h2>
+        <input class="rect" type="text" maxlength="3000">
+        <input class="btn" type="submit" onclick="window.buy.close(); alert('Покупка совершена !'); " value="Купить">
+        <input class="btn" type="button" onclick="window.buy.close();" value="Закрыть">
+    </form>
+</dialog>
+
+<div class="content">
+    <button class="btn-up" id="btn-up" onclick="window.scrollTo(0, 0);">
+        <img id="btn-up-day" width="60px" height="60px" src="Pics/arrow_day.png" alt="кнопка прокрутки наверх">
+        <img id="btn-up-night" width="60px" height="60px" src="Pics/arrow_night.png" alt="кнопка прокрутки наверх">
+    </button>
+    <div id="cat1">
+        <h1>Альбомы BTS</h1>
+        <div class="cards">
+            <div class="card">
+                <img src="Pics/альбом_1.png" alt="Картинка товара">
+                <h2>You Never Walk Alone</h2>
+                <h3 id="c1">d</h3>
+                <script>
+                    document.getElementById('c1').textContent = ' ' + getDayInfo("30.12.2017");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/альбом_2.png" alt="Картинка товара">
+                <h2>Map Of The Soul: PERSONA</h2>
+                <h3 id="c2"></h3>
+                <script>
+                    document.getElementById('c2').textContent = ' ' + getDayInfo("01.01.2023");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/альбом_3.png" alt="Картинка товара">
+                <h2>PROOF</h2>
+                <h3 id="c3"></h3>
+                <script>
+                    document.getElementById('c3').textContent = ' ' + getDayInfo("12.10.2016");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/альбом_4.png" alt="Картинка товара">
+                <h2>School Luv Affair (Special Edition)</h2>
+                <h3 id="c4"></h3>
+                <script>
+                    document.getElementById('c4').textContent = ' ' + getDayInfo("19.10.2016");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/альбом_5.png" alt="Картинка товара">
+                <h2>Map Of The Soul: 7</h2>
+                <h3 id="c5"></h3>
+                <script>
+                    document.getElementById('c5').textContent = ' ' + getDayInfo("13.05.2023");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/альбом_6.png" alt="Картинка товара">
+                <h2>WINGS</h2>
+                <h3 id="c6"></h3>
+                <script>
+                    document.getElementById('c6').textContent = ' ' + getDayInfo("29.02.2024");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/альбом_7.png" alt="Картинка товара">
+                <h2>School Luv Affair</h2>
+                <h3 id="c7"></h3>
+                <script>
+                    document.getElementById('c7').textContent = ' ' + getDayInfo("27.08.1998");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/альбом_8.png" alt="Картинка товара">
+                <h2>O! Are You Late To?</h2>
+                <h3 id="c8"></h3>
+                <script>
+                    document.getElementById('c8').textContent = ' ' + getDayInfo("30.12.1995");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/альбом_9.png" alt="Картинка товара">
+                <h2>Love Yourself: Answer</h2>
+                <h3 id="c9"></h3>
+                <script>
+                    document.getElementById('c9').textContent = ' ' + getDayInfo("01.09.2016");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/альбом_10.png" alt="Картинка товара">
+                <h2>No More Dream</h2>
+                <h3 id="c10"></h3>
+                <script>
+                    document.getElementById('c10').textContent = ' ' + getDayInfo("17.03.2013");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+        </div>
+
+    </div>
+    <div class="category" id="cat2">
+        <h1>Товары для сада</h1>
+        <div class="cards">
+            <div class="card">
+                <img src="Pics/сад_1.webp" alt="Картинка товара">
+                <h2>Садовый набор №1</h2>
+                <h3 id="c11"></h3>
+                <script>
+                    document.getElementById('c11').textContent = ' ' + getDayInfo("01.04.2023");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/сад_2.jpg" alt="Картинка товара">
+                <h2>Садовый набор №2</h2>
+                <h3 id="c12"></h3>
+                <script>
+                    document.getElementById('c12').textContent = ' ' + getDayInfo("02.04.2023");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/сад_3.jpg" alt="Картинка товара">
+                <h2>Садовый набор №3</h2>
+                <h3 id="c13"></h3>
+                <script>
+                    document.getElementById('c13').textContent = ' ' + getDayInfo("03.04.2023");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/сад_4.webp" alt="Картинка товара">
+                <h2>Садовый набор №4</h2>
+                <h3 id="c14"></h3>
+                <script>
+                    document.getElementById('c14').textContent = ' ' + getDayInfo("04.04.2023");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/сад_5.webp" alt="Картинка товара">
+                <h2>Садовые ножницы №1</h2>
+                <h3 id="c15"></h3>
+                <script>
+                    document.getElementById('c15').textContent = ' ' + getDayInfo("05.04.2023");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/сад_6.webp" alt="Картинка товара">
+                <h2>Садовые ножницы №2</h2>
+                <h3 id="c16"></h3>
+                <script>
+                    document.getElementById('c16').textContent = ' ' + getDayInfo("06.04.2023");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/сад_7.jpg" alt="Картинка товара">
+                <h2>Садовые качели №1</h2>
+                <h3 id="c17"></h3>
+                <script>
+                    document.getElementById('c17').textContent = ' ' + getDayInfo("07.04.2023");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/сад_8.jpg" alt="Картинка товара">
+                <h2>Садовые качели №2</h2>
+                <h3 id="c18"></h3>
+                <script>
+                    document.getElementById('c18').textContent = ' ' + getDayInfo("08.04.2023");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/сад_9.jpg" alt="Картинка товара">
+                <h2>Садовая арка №1</h2>
+                <h3 id="c19"></h3>
+                <script>
+                    document.getElementById('c19').textContent = ' ' + getDayInfo("09.04.2023");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/сад_10.jpg" alt="Картинка товара">
+                <h2>Садовая арка №2</h2>
+                <h3 id="c20"></h3>
+                <script>
+                    document.getElementById('c20').textContent = ' ' + getDayInfo("10.04.2023");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+            <div class="card">
+                <img src="Pics/сад_11.jpg" alt="Картинка товара">
+                <h2>Набор семян</h2>
+                <h3 id="c21"></h3>
+                <script>
+                    document.getElementById('c21').textContent = ' ' + getDayInfo("11.04.2023");
+                </script>
+                <input class="btn" type="button" onclick="window.buy.showModal();" value="Купить">
+            </div>
+        </div>
+
+    </div>
+    <div class="category" id="cat3">
+        <h1>Категория 3</h1>
+        <div class="cards">
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
